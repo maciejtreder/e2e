@@ -1,6 +1,0 @@
-<h1>Your Todo List</h1>
-<app-new-task></app-new-task>
-
-<ul *ngIf="(tasks$ | async).length > 0">
-    <li *ngFor="let task of (tasks$ | async)">{{task.name}} <span (click)="done(task)">mark as done</span></li>
-</ul>
