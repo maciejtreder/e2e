@@ -6,7 +6,7 @@ import { ITask } from '../model/task';
 @Component({
   selector: 'app-done-list',
   templateUrl: './done-list.component.html',
-  styleUrls: ['./done-list.component.scss']
+  styleUrls: ['../todo-list/todo-list.component.scss']
 })
 export class DoneListComponent {
 

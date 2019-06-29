@@ -3,4 +3,4 @@
     <li *ngFor="let task of (tasks$ | async)">{{task.name}}</li>
 </ul>
 
-<p *ngIf="(tasks$ | async).length > 0">You finished {{(tasks$ | async).length}} tasks! Congratulations</p>
+<p *ngIf="(tasks$ | async).length > 0">You finished {{(tasks$ | async).length}} tasks. Congratulations!</p>

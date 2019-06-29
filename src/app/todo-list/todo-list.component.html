@@ -1,5 +1,4 @@
 <h1>Your Todo List</h1>
-<p * ngIf="(tasks$ | async).length === 0">It's seems to be empty</p>
 <app-new-task></app-new-task>
 
 <ul *ngIf="(tasks$ | async).length > 0">
