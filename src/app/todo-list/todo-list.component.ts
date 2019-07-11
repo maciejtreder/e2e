@@ -10,13 +10,12 @@ import { ITask } from '../model/task';
 })
 export class TodoListComponent {
 
-
   constructor(private tasksService: TasksService) { }
 
   public tasks$: Observable<ITask[]> = this.tasksService.getTodo();
 
   public done(task: ITask): void {
-    this.tasksService.finishTask(task);
+    this.tasksService.finishTask(task).subscribe();
   }
 
 }

@@ -16,8 +16,10 @@ export class NewTaskComponent {
   constructor(private tasksService: TasksService) { }
 
   public save(): void {
-    this.tasksService.addTask(this.newTask.value);
-    this.newTask.reset();
+    this.tasksService.addTask(this.newTask.value).subscribe(() => {
+      console.log('added');
+      this.newTask.reset()
+    });
   }
 
 }

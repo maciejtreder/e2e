@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task, ITask } from './model/task';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { map, tap, flatMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -11,27 +11,39 @@ export class TasksService {
 
   private API_ENDPOINT: string = 'https://e2e-workshop-backend.herokuapp.com';
 
-  constructor(private http:HttpClient) {}
+  private tasks$: Subject<Task[]> = new BehaviorSubject([]);
 
-  public addTask(task: ITask): Observable<ITask> {
-    return this.http.post<Task>(`${this.API_ENDPOINT}/tasks`, new Task(task.name));
+  constructor(private http:HttpClient) {
+    this.retrieveTasks().subscribe();
   }
 
-  public finishTask(task: ITask): Observable<ITask> {
+  public addTask(task: ITask): Observable<void> {
+    return this.http.post<Task>(`${this.API_ENDPOINT}/tasks`, new Task(task.name))
+    .pipe(flatMap(() => this.retrieveTasks()));
+  }
+
+  public finishTask(task: ITask): Observable<void> {
     (<Task> task).status = 'done';
-    return this.http.put<Task>(`${this.API_ENDPOINT}/tasks/${(<Task> task)._id}`, task);
+    return this.http.put<Task>(`${this.API_ENDPOINT}/tasks/${(<Task> task)._id}`, task)
+    .pipe(flatMap(() => this.retrieveTasks()));
   }
   
   public getTodo(): Observable<ITask[]> {
-    return this.retrieveTasks().pipe(map(tasks => tasks.filter(task => task.status === 'todo')));
+    return this.tasks$.pipe(map(tasks => tasks.filter(task => task.status === 'todo')));
   }
 
   public getDone(): Observable<ITask[]> {
-    return this.retrieveTasks().pipe(map(tasks => tasks.filter(task => task.status === 'done')));
+    return this.tasks$.pipe(map(tasks => tasks.filter(task => task.status === 'done')));
   }
 
-  private retrieveTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(`${this.API_ENDPOINT}/tasks`);
+  private retrieveTasks(): Observable<void> {
+    return this.http.get<Task[]>(`${this.API_ENDPOINT}/tasks`).pipe(
+      tap(tasks => this.tasks$.next(tasks)),
+      flatMap(() => new Observable<void>(observer => {
+        observer.next();
+        observer.complete();
+      }))
+    );
   }
 
 }
