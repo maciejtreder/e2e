@@ -1,41 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Task, ITask } from './model/task';
-import { Observable, Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksService {
 
-  private tasks: Task[] = [];
-  private tasks$: Subject<Task[]> = new ReplaySubject<Task[]>();
+  private API_ENDPOINT: string = 'https://e2e-workshop-backend.herokuapp.com';
 
-  constructor() {
-    this.tasks$.subscribe(tasks => {
-      localStorage.setItem('tasks', JSON.stringify(tasks));
-    });
-    this.tasks = JSON.parse(localStorage.getItem('tasks'));
-    this.tasks = this.tasks ? this.tasks : [];
-    this.tasks$.next(this.tasks);
+  constructor(private http:HttpClient) {}
+
+  public addTask(task: ITask): Observable<ITask> {
+    return this.http.post<Task>(`${this.API_ENDPOINT}/tasks`, new Task(task.name));
   }
 
-  public addTask(task: ITask): void {
-    this.tasks.push(new Task(task.name));
-    this.tasks$.next(this.tasks);
-  }
-
-  public finishTask(task: ITask): void {
+  public finishTask(task: ITask): Observable<ITask> {
     (<Task> task).status = 'done';
-    this.tasks$.next(this.tasks);
+    return this.http.put<Task>(`${this.API_ENDPOINT}/tasks/${(<Task> task)._id}`, task);
   }
   
   public getTodo(): Observable<ITask[]> {
-    return this.tasks$.pipe(map(tasks => tasks.filter(task => task.status === 'todo')));
+    return this.retrieveTasks().pipe(map(tasks => tasks.filter(task => task.status === 'todo')));
   }
 
   public getDone(): Observable<ITask[]> {
-    return this.tasks$.pipe(map(tasks => tasks.filter(task => task.status === 'done')));
+    return this.retrieveTasks().pipe(map(tasks => tasks.filter(task => task.status === 'done')));
+  }
+
+  private retrieveTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.API_ENDPOINT}/tasks`);
   }
 
 }
