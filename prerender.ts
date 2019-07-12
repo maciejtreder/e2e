@@ -37,7 +37,7 @@ import { ROUTES } from './static.paths';
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require(`./dist/server/main.js`);
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
-const BROWSER_FOLDER = join(process.cwd(), 'dist/static');
+const BROWSER_FOLDER = join(process.cwd(), 'static');
 
 // Load the index.html file containing referances to your application bundle.
 const index = readFileSync('./dist/browser/index.html', 'utf8');
@@ -158,7 +158,7 @@ allRoutes.forEach((route) => {
 // copy static files
 filesBrowser.forEach(file => {
     if (file !== 'index.html') {
-        fs.copyFileSync(`./dist/browser/${file}`, `./dist/static/${file}`);
+        fs.copyFileSync(`./dist/browser/${file}`, `./static/${file}`);
     }
 });
 
