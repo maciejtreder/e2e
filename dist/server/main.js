@@ -612,6 +612,7 @@ class TasksService {
         console.log('retrieve tasks');
         return this.http.get(`${this.API_ENDPOINT}/tasks`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(tasks => {
             console.log('tap');
+            console.log(tasks);
             this.tasks$.next(tasks);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["flatMap"])(() => new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](observer => {
             observer.next();
@@ -667,7 +668,7 @@ function View_TodoListComponent_1(_l) { return _angular_core__WEBPACK_IMPORTED_M
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["mark as done"]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit.name; _ck(_v, 1, 0, currVal_0); }); }
 function View_TodoListComponent_0(_l) { return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 1, "h1", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵted"](-1, null, ["Your Todo List"])), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](2, 0, null, null, 1, "app-new-task", [], null, null, null, _new_task_new_task_component_ngfactory__WEBPACK_IMPORTED_MODULE_2__["View_NewTaskComponent_0"], _new_task_new_task_component_ngfactory__WEBPACK_IMPORTED_MODULE_2__["RenderType_NewTaskComponent"])), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](3, 49152, null, 0, _new_task_new_task_component__WEBPACK_IMPORTED_MODULE_3__["NewTaskComponent"], [_tasks_service__WEBPACK_IMPORTED_MODULE_4__["TasksService"]], null, null), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](4, 0, null, null, 3, "ul", [], null, null, null, null, null)), (_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵand"](16777216, null, null, 2, null, View_TodoListComponent_1)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](6, 278528, null, 0, _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgForOf"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["IterableDiffers"]], { ngForOf: [0, "ngForOf"] }, null), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵpid"](131072, _angular_common__WEBPACK_IMPORTED_MODULE_5__["AsyncPipe"], [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]])], function (_ck, _v) { var _co = _v.component; var currVal_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵunv"](_v, 6, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵnov"](_v, 7).transform(_co.tasks$)); _ck(_v, 6, 0, currVal_0); }, null); }
-function View_TodoListComponent_Host_0(_l) { return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 1, "app-todo-list", [], null, null, null, View_TodoListComponent_0, RenderType_TodoListComponent)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](1, 49152, null, 0, _todo_list_component__WEBPACK_IMPORTED_MODULE_6__["TodoListComponent"], [_tasks_service__WEBPACK_IMPORTED_MODULE_4__["TasksService"]], null, null)], null, null); }
+function View_TodoListComponent_Host_0(_l) { return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵvid"](0, [(_l()(), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵeld"](0, 0, null, null, 1, "app-todo-list", [], null, null, null, View_TodoListComponent_0, RenderType_TodoListComponent)), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵdid"](1, 114688, null, 0, _todo_list_component__WEBPACK_IMPORTED_MODULE_6__["TodoListComponent"], [_tasks_service__WEBPACK_IMPORTED_MODULE_4__["TasksService"]], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
 var TodoListComponentNgFactory = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵccf"]("app-todo-list", _todo_list_component__WEBPACK_IMPORTED_MODULE_6__["TodoListComponent"], View_TodoListComponent_Host_0, {}, {}, []);
 
 
@@ -715,6 +716,9 @@ class TodoListComponent {
     }
     done(task) {
         this.tasksService.finishTask(task).subscribe();
+    }
+    ngOnInit() {
+        this.tasks$.subscribe(tasks => console.log('in todo', tasks));
     }
 }
 

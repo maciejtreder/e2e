@@ -42,6 +42,7 @@ export class TasksService {
     return this.http.get<Task[]>(`${this.API_ENDPOINT}/tasks`).pipe(
       tap(tasks => {
         console.log('tap');
+        console.log(tasks);
         this.tasks$.next(tasks)
       }),
       flatMap(() => new Observable<void>(observer => {
