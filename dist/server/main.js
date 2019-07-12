@@ -610,6 +610,10 @@ class TasksService {
     }
     retrieveTasks() {
         console.log('retrieve tasks');
+        this.http.get(`${this.API_ENDPOINT}/tasks`).subscribe(tasks => {
+            console.log('regular subscribe in the httpclient');
+            console.log(tasks);
+        });
         return this.http.get(`${this.API_ENDPOINT}/tasks`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(tasks => {
             console.log('tap');
             console.log(tasks);

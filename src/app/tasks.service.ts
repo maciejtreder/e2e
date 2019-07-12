@@ -39,6 +39,10 @@ export class TasksService {
 
   private retrieveTasks(): Observable<void> {
     console.log('retrieve tasks');
+    this.http.get<Task[]>(`${this.API_ENDPOINT}/tasks`).subscribe(tasks => {
+      console.log('regular subscribe in the httpclient');
+      console.log(tasks);
+    })
     return this.http.get<Task[]>(`${this.API_ENDPOINT}/tasks`).pipe(
       tap(tasks => {
         console.log('tap');
