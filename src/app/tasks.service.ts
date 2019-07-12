@@ -14,6 +14,7 @@ export class TasksService {
   private tasks$: Subject<Task[]> = new BehaviorSubject([]);
 
   constructor(private http:HttpClient) {
+    console.log('constructor');
     this.retrieveTasks().subscribe();
   }
 
