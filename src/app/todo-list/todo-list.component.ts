@@ -17,9 +17,4 @@ export class TodoListComponent {
   public done(task: ITask): void {
     this.tasksService.finishTask(task).subscribe();
   }
-
-  public ngOnInit(): void {
-    this.tasks$.subscribe(tasks => console.log('in todo', tasks));
-  }
-
 }

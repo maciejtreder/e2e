@@ -7,8 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'todo';
-
-  public ngOnInit(): void {
-    console.log('on init');
-  }
 }

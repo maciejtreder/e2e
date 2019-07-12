@@ -9,7 +9,6 @@ import { DoneListComponent } from './done-list/done-list.component';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-// import { TransferHttpCacheModule } from '@nguniversal/common';
 import { NgtUniversalModule } from '@ng-toolkit/universal';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { NgtUniversalModule } from '@ng-toolkit/universal';
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
-    // TransferHttpCacheModule,
     NgtUniversalModule
   ],
   providers: [],
