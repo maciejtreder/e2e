@@ -1,4 +1,5 @@
 <form [formGroup]="newTask" (ngSubmit)="save()">
-    <label>new task: <input formControlName="name" /></label>
-    <button type="submit" [disabled]=!newTask.valid class="clickable">Save</button>
+    <span class="error" *ngIf="newTask.invalid && (newTask.dirty || newTask.touched)">This field might not be empty.</span>
+    <label>new task: <input formControlName="name" disable="disable$ | async" /></label>
+    <button type="submit" [disabled]="!newTask.valid || (disable$ | async)" class="clickable">Save</button>
 </form>

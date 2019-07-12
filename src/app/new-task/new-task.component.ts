@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TasksService } from '../tasks.service';
+import { LoaderService } from '../loader.service';
 
 @Component({
   selector: 'app-new-task',
@@ -13,13 +14,14 @@ export class NewTaskComponent {
     name: new FormControl('', Validators.required)
   });
 
-  constructor(private tasksService: TasksService) { }
+
+  public disable$ = this.loaderService.getOnGoingRequests();
+
+  constructor(private tasksService: TasksService, private loaderService: LoaderService) { }
 
   public save(): void {
     this.tasksService.addTask(this.newTask.value).subscribe(() => {
-      console.log('added');
-      this.newTask.reset()
+      this.newTask.reset();
     });
   }
-
 }

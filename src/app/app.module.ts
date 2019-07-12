@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { DoneListComponent } from './done-list/done-list.component';
 import { NewTaskComponent } from './new-task/new-task.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NgtUniversalModule } from '@ng-toolkit/universal';
+import { LoaderInterceptorService } from './loader-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,13 @@ import { NgtUniversalModule } from '@ng-toolkit/universal';
     CommonModule,
     NgtUniversalModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

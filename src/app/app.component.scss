@@ -1,4 +1,5 @@
 ul {
+    flex: 1;
     padding: 0;
     margin: 0;
 }
@@ -10,7 +11,6 @@ li {
     padding: 5px;
 }
 
-
 :host {
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.3);
     background: #ffffff;
@@ -19,4 +19,12 @@ li {
     padding: 20px;
     border: 1px solid #eeeeee;
     border-radius: 10px;
+}
+
+img {
+    height: 47px;
+}
+
+div {
+    display: flex;
 }
