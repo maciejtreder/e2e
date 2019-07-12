@@ -591,7 +591,7 @@ class TasksService {
         this.API_ENDPOINT = 'https://e2e-workshop-backend.herokuapp.com';
         this.tasks$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]([]);
         console.log('constructor');
-        this.retrieveTasks().subscribe();
+        this.retrieveTasks().subscribe(() => { console.log('subscribe in constructor'); });
     }
     addTask(task) {
         return this.http.post(`${this.API_ENDPOINT}/tasks`, new _model_task__WEBPACK_IMPORTED_MODULE_0__["Task"](task.name))
@@ -609,7 +609,11 @@ class TasksService {
         return this.tasks$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(tasks => tasks.filter(task => task.status === 'done')));
     }
     retrieveTasks() {
-        return this.http.get(`${this.API_ENDPOINT}/tasks`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(tasks => this.tasks$.next(tasks)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["flatMap"])(() => new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](observer => {
+        console.log('retrieve tasks');
+        return this.http.get(`${this.API_ENDPOINT}/tasks`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(tasks => {
+            console.log('tap');
+            this.tasks$.next(tasks);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["flatMap"])(() => new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](observer => {
             observer.next();
             observer.complete();
         })));

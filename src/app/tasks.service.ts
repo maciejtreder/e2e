@@ -15,7 +15,7 @@ export class TasksService {
 
   constructor(private http:HttpClient) {
     console.log('constructor');
-    this.retrieveTasks().subscribe();
+    this.retrieveTasks().subscribe(() => {console.log('subscribe in constructor')});
   }
 
   public addTask(task: ITask): Observable<void> {
@@ -38,8 +38,12 @@ export class TasksService {
   }
 
   private retrieveTasks(): Observable<void> {
+    console.log('retrieve tasks');
     return this.http.get<Task[]>(`${this.API_ENDPOINT}/tasks`).pipe(
-      tap(tasks => this.tasks$.next(tasks)),
+      tap(tasks => {
+        console.log('tap');
+        this.tasks$.next(tasks)
+      }),
       flatMap(() => new Observable<void>(observer => {
         observer.next();
         observer.complete();
