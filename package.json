@@ -1,0 +1,27 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "protractor build/conf.js",
+    "pretest": "rm -rf build/;tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maciejtreder/e2e.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maciejtreder/e2e/issues"
+  },
+  "homepage": "https://github.com/maciejtreder/e2e#readme",
+  "dependencies": {
+    "@types/jasmine": "^3.3.13",
+    "@types/node": "^12.6.2",
+    "protractor": "^5.4.2",
+    "typescript": "^3.5.3"
+  }
+}

@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "outDir": "build",
+      "lib": [
+        "dom",
+        "es2017"
+      ]
+    },
+    "exclude": [
+      "node_modules"
+    ]
+}
