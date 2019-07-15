@@ -1,10 +1,10 @@
-<div>
+<menu>
   <ul>
     <li routerLink='/todos' class="clickable">Todo list</li>
     <li routerLink='/done' class="clickable">Done</li>
   </ul>
 
   <img src="../assets/loader.gif" *ngIf="isLoading$ | async" />
-</div>
+</menu>
 
 <router-outlet></router-outlet>
