@@ -24,21 +24,16 @@ export class AppController {
     return this.taskService.update(task);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   removeTask(@Param() params): Promise<Task> {
     return this.taskService.delete(params.id);
   }
 
   @Delete('deleteAll')
-  async removeAllListeners(): Promise<Task[]> {
-    console.log('delete all hit');
+  async removeAllTasks(): Promise<Task[]> {
     const tasks: Task[] = await this.taskService.findAll();
-    console.log(tasks);
     const promiseArr: Promise<Task>[] = [];
-    tasks.forEach(task => {
-      console.log(task);
-      promiseArr.push(this.taskService.delete(task._id));
-    });
+    tasks.forEach(task => promiseArr.push(this.taskService.delete(task._id)));
     return Promise.all(promiseArr);
   }
 }
