@@ -33,8 +33,10 @@ export class AppController {
   @Delete('deleteAll')
   async removeAllListeners(): Promise<Task[]> {
     const tasks: Task[] = await this.taskService.findAll();
+    console.log(tasks);
     const promiseArr: Promise<Task>[] = [];
     tasks.forEach(task => {
+      console.log(task);
       promiseArr.push(this.taskService.delete(task._id));
     });
     return Promise.all(promiseArr);
