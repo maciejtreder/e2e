@@ -1,7 +1,6 @@
 import { Controller, Post, Body, Get, Put, Delete, Param } from '@nestjs/common';
 import { Task } from './model/task';
 import { TaskService } from './task.service';
-import { removeAllListeners } from 'cluster';
 
 @Controller('/tasks')
 export class AppController {
@@ -32,6 +31,7 @@ export class AppController {
 
   @Delete('deleteAll')
   async removeAllListeners(): Promise<Task[]> {
+    console.log('delete all hit');
     const tasks: Task[] = await this.taskService.findAll();
     console.log(tasks);
     const promiseArr: Promise<Task>[] = [];
