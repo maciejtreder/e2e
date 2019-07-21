@@ -5,7 +5,10 @@ describe('Todo Page', () => {
     const todoPage = new TodoPage();
     const todoHttpService = new TaskHttpService();
 
-    beforeEach(() => {
+    let task;
+
+    beforeEach(async () => {
+        task = await todoHttpService.createTask({name: 'mtreder' + new Date().getTime()});
         todoPage.go();
     });
 
@@ -15,11 +18,37 @@ describe('Todo Page', () => {
         expect(await todoPage.getNewTaskError().isPresent()).toEqual(false);
     });
 
-    fit('Should display task on todo page', async () => {
-        const task = await todoHttpService.createTask({name: 'mtreder' + new Date().getTime()});
-
+    it('Should display task on todo page', async () => {
         expect(await todoPage.getTaskByName(task.name).isDisplayed()).toEqual(true);
+    });
 
-        todoHttpService.deleteTask(task.id);
+    it('Should be able to mark task as done', async () => {
+        const taskEntry = todoPage.getTaskByName(task.name);
+        (await todoPage.getMarkAsDoneButton(task.name)).click();
+        expect(await taskEntry.isPresent()).toEqual(false);
+
+    });
+
+    it('Should not be able to submit empty form', async () => {
+        await todoPage.getNewTaskInput().click();
+        await todoPage.getTaskByName(task.name).click();
+        expect(await todoPage.getNewTaskSubmitButton().isEnabled()).toEqual(false);
+        expect(await todoPage.getErrorInfo().isPresent()).toEqual(true);
+    });
+
+    fit('Should be able to add task', async () => {
+        const newTaskName = `mtreder${new Date().getTime()}`;
+        await todoPage.getNewTaskInput().sendKeys(newTaskName);
+        await todoPage.getNewTaskSubmitButton().click();
+
+        
+        expect(await todoPage.getTaskByName(newTaskName).isDisplayed()).toEqual(true);
+
+        //cleanup
+        await todoHttpService.deleteTaskByName(newTaskName);
+    });
+
+    afterEach( async () => {
+        await todoHttpService.deleteTask(task._id);
     });
 });

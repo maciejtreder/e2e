@@ -1,4 +1,4 @@
-import { ElementFinder, element, by, browser } from 'protractor';
+import { ElementFinder, element, by, browser, ExpectedConditions } from 'protractor';
 import { BasePage } from './base.page';
 
 export class TodoPage extends BasePage {
@@ -23,7 +23,16 @@ export class TodoPage extends BasePage {
     }
 
     public getTaskByName(name: string): ElementFinder {
-        return element(by.xpath(`//li[text()="${name}"]`));
+        return element(by.xpath(`//li[contains(text(), '${name}')]`));
+    }
+
+    public getErrorInfo(): ElementFinder {
+        return element(by.css('.error'));
+    }
+
+    public async getMarkAsDoneButton(name: string): Promise<ElementFinder> {
+        const liObject = await this.getTaskByName(name);
+        return liObject.element(by.css('span'));
     }
 
 }

@@ -13,8 +13,14 @@ export class TaskHttpService {
     }
 
     public deleteTask(id: string): Promise<void> {
-        return RxHR.delete(this.SERVICE_URI + `/${id}`).pipe(map(response => {
+        return RxHR.delete(this.SERVICE_URI + `/delete/${id}`).pipe(map(response => {
             return;
         })).toPromise();
+    }
+
+    public async deleteTaskByName(name: string): Promise<void> {
+        const allTasks: Task[] = await RxHR.get(this.SERVICE_URI, {json: true}).pipe(map(response => response.body as Task[])).toPromise();
+        const taskId = allTasks.find(subject => subject.name === name)._id;
+        return this.deleteTask(taskId);
     }
 }
