@@ -36,12 +36,12 @@ describe('Todo Page', () => {
         expect(await todoPage.getErrorInfo().isPresent()).toEqual(true);
     });
 
-    fit('Should be able to add task', async () => {
+    it('Should be able to add task', async () => {
         const newTaskName = `mtreder${new Date().getTime()}`;
         await todoPage.getNewTaskInput().sendKeys(newTaskName);
         await todoPage.getNewTaskSubmitButton().click();
 
-        
+
         expect(await todoPage.getTaskByName(newTaskName).isDisplayed()).toEqual(true);
 
         //cleanup
